@@ -5,7 +5,7 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List
+from typing import List, Dict
 
 
 class Server:
@@ -41,26 +41,30 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        The method should return a dictionary with the following key-value pairs:
+            The method should return a dictionary with the following key-value
+            pairs:
 
-            index: the current start index of the return page. That is the index
-            of the first item in the current page. For example if requesting page 3
-            with page_size 20, and no data was removed from the dataset, the current
-            index should be 60.
+            index: the current start index of the return page. That is the
+            index of the first item in the current page. For example if
+            requesting page 3 with page_size 20, and no data was removed
+            from the dataset, the current index should be 60.
 
-            next_index: the next index to query with. That should be the index of the
-            first item after the last item on the current page.
+            next_index: the next index to query with. That should be the index
+            of the first item after the last item on the current page.
 
             page_size: the current page size
             data: the actual page of the dataset
         """
-        print(self.dataset())
-        print(self.indexed_dataset())
-
         assert index <= len(self.indexed_dataset())
+        next_index = index + page_size
+        for i in range(index, next_index):
+            if i not in self.indexed_dataset():
+                next_index += 1
         return {
                 'index': index,
-                'next_index': index + 1 if index + 1 <= len(self.indexed_dataset()),
+                'data': [self.indexed_dataset()[i]
+                         for i in range(index, index+page_size)
+                         if i in self.indexed_dataset()],
                 'page_size': page_size,
-                'data': self.indexed_dataset()[index:(index+page_size)]
+                'next_index': next_index
                 }
