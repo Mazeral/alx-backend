@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Module for a index_range function that Calculates
+the start_index and the end_index of content
+"""
 
 from typing import Tuple
 

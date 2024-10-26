@@ -1,6 +1,9 @@
 import csv
 import math
 from typing import List, Tuple
+"""
+Module of Server class
+"""
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
