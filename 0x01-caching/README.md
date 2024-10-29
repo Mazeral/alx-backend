@@ -56,38 +56,40 @@ File: `4-mru_cache.py`
   - `put(key, item)`: Adds a new `key` and `item` to the cache. If the cache exceeds `MAX_ITEMS`, the most recently used item is discarded, and the key is printed as `DISCARD: {key}`.
   - `get(key)`: Retrieves the value associated with `key`. If `key` is accessed, it is marked as "most recently used". If `key` is `None` or doesn't exist, it returns `None`.
 
-### How to Run
-- Clone the repository:
-  ```
-  git clone https://github.com/your-username/alx-backend
-  cd alx-backend/0x01-caching
-  ```
+## Advanced Tasks
 
-- Run the test scripts:
-  ```
-  python3 0-main.py   # For BasicCache
-  python3 1-main.py   # For FIFOCache
-  python3 2-main.py   # For LIFOCache
-  python3 3-main.py   # For LRUCache
-  python3 4-main.py   # For MRUCache
-  ```
+### 5. LFU Caching
 
-### Repository Structure
+**File:** `100-lfu_cache.py`
 
-```bash
-alx-backend/
-├── 0x01-caching/
-│   ├── 0-basic_cache.py
-│   ├── 1-fifo_cache.py
-│   ├── 2-lifo_cache.py
-│   ├── 3-lru_cache.py
-│   ├── 4-mru_cache.py
-│   ├── 0-main.py
-│   ├── 1-main.py
-│   ├── 2-main.py
-│   ├── 3-main.py
-│   └── 4-main.py
-```
+- A caching system implementing the **Least Frequently Used (LFU)** algorithm.
+- Discards the least frequently used item when the cache exceeds its maximum size.
+- If multiple items have the same usage frequency, the **Least Recently Used (LRU)** algorithm is applied to discard the least recently accessed item.
+- The `put` and `get` methods handle both frequency and recency to ensure proper eviction.
+
+---
+
+## How to Run
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/alx-backend.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd 0x01-caching
+   ```
+
+3. Run the main Python file for each caching system to test the functionality:
+   ```bash
+   python3 0-main.py  # For Basic Dictionary
+   python3 1-main.py  # For FIFO Caching
+   python3 2-main.py  # For LIFO Caching
+   python3 3-main.py  # For LRU Caching
+   python3 4-main.py  # For MRU Caching
+   python3 100-main.py  # For LFU Caching
+   ```
 
 ### Author
 - **Mohammad Omar Siddiq**
