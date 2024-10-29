@@ -24,6 +24,7 @@ class LIFOCache(BaseCaching):
         Calls the parent class's __init__ method.
         """
         super().__init__()
+        self.lifo = []
 
     def put(self, key, item):
         """
@@ -40,12 +41,16 @@ class LIFOCache(BaseCaching):
         if key is None or item is None:
             return
 
-        if len(self.cache_data) >= self.MAX_ITEMS:
-            last_key = list(self.cache_data.keys())[-1]
+        if key in self.lifo:
+            self.lifo.remove(key)
+
+        elif len(self.cache_data) >= self.MAX_ITEMS:
+            last_key = self.lifo[-1]
             print(f"DISCARD: {last_key}")
             del self.cache_data[last_key]
 
         self.cache_data[key] = item  # Overwrite if key already exists
+        self.lifo.append(key)
 
     def get(self, key):
         """
