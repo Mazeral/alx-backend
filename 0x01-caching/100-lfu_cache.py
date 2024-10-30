@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+A module implementing LFUCache
+"""
 
 from base_caching import BaseCaching
 
