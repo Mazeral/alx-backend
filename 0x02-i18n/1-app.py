@@ -13,8 +13,8 @@ from flask_babel import Babel
 class MyAppConfig:
     """Application Configuration"""
     LANGUAGES = ["en", "fr"]  # Supported languages (English, French)
-    DEFAULT_LOCALE = "en"     # Default locale (English)
-    DEFAULT_TIMEZONE = "UTC"  # Default timezone (Coordinated Universal Time)
+    BABEL_DEFAULT_LOCALE = "en"     # Default locale (English)
+    BABEL_DEFAULT_TIMEZONE = "UTC"  # Default timezone (Coordinated Universal Time)
 
 
 app = Flask(__name__)
