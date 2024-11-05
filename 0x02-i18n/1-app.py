@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-
 """
 Flask Web App with i18n Support
 
 Initializes a Flask app with Flask-Babel for multilingual support.
 """
+
 
 from flask import Flask, render_template
 from flask_babel import Babel
@@ -19,6 +19,7 @@ class MyAppConfig:
 
 app = Flask(__name__)
 app.config.from_object(MyAppConfig)
+app.url_map.strict_slashes = False
 
 babel = Babel(app)  # Initialize Flask-Babel with the application
 
