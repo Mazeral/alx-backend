@@ -51,9 +51,11 @@ def get_locale():
 
     Determines the best matching locale based on the user's accepted languages.
     """
-    accepted_languages = request.accept_languages
-    best_match = accepted_languages.best_match(app.config['LANGUAGES'])
-    return best_match or app.config['BABEL_DEFAULT_LOCALE']
+    user_locale = request.accept_languages
+    if user_locale in app.config['LANGUAGES']:
+        return user_locale.best_match(app.config['LANGUAGES'])
+    else:
+        return app.config['BABEL_DEFAULT_LOCALE']
 
 
 if __name__ == "__main__":
