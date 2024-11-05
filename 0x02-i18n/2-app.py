@@ -6,8 +6,12 @@ Flask Web App with i18n Support
 Initializes a Flask app with Flask-Babel for multilingual support.
 """
 
-from flask import Flask, render_template, request
-from flask_babel import Babel, babel
+from flask import (
+        Flask,
+        render_template,
+        request)
+from flask_babel import (Babel,
+                         babel)
 
 
 class Config:
