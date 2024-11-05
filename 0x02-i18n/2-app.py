@@ -7,11 +7,14 @@ Initializes a Flask app with Flask-Babel for multilingual support.
 """
 
 from flask import (
-        Flask,
-        render_template,
-        request)
-from flask_babel import (Babel,
-                         babel)
+    Flask,
+    render_template,
+    request
+)
+from flask_babel import (
+    Babel,
+    babel
+)
 
 
 class Config:
