@@ -10,7 +10,7 @@ from flask import Flask, render_template
 from flask_babel import Babel
 
 
-class MyAppConfig:
+class Config:
     """Application Configuration"""
     LANGUAGES = ["en", "fr"]  # Supported languages (English, French)
     BABEL_DEFAULT_LOCALE = "en"     # Default locale (English)
@@ -18,7 +18,7 @@ class MyAppConfig:
 
 
 app = Flask(__name__)
-app.config.from_object(MyAppConfig)
+app.config.from_object(Config)
 app.url_map.strict_slashes = False
 
 babel = Babel(app)  # Initialize Flask-Babel with the application
