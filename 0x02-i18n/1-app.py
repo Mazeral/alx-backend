@@ -6,7 +6,10 @@ Initializes a Flask app with Flask-Babel for multilingual support.
 """
 
 
-from flask import Flask, render_template
+from flask import (
+    Flask,
+    render_template
+)
 from flask_babel import Babel
 
 
