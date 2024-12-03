@@ -1,4 +1,5 @@
 import { createClient } from 'redis';
+import { promisify } from 'util';
 
 const localhost = '127.0.0.1';
 const client = createClient({
@@ -21,10 +22,12 @@ function setNewSchool(schoolName, value) {
   });
 }
 
-function displaySchoolValue(schoolName) {
-  const value = client.get(schoolName, (err, reply) => {
+const getAsync = promisify(client.get).bind(client);
+
+async function displaySchoolValue(schoolName) {
+  const value = await getAsync(schoolName, (err, reply) => {
     if (err) throw err;
-    console.log('Set key response:', reply);
+    console.log('Set key response: ', reply);
   });
   console.log(value);
 }
