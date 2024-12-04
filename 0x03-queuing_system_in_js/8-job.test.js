@@ -20,7 +20,7 @@ describe('createPushNotificationsJobs', () => {
 
   it('should throw an error if jobs is not an array', () => {
     expect(() => createPushNotificationsJobs('not an array', queue)).to.throw(
-      'Jobs is not an array'
+      'Jobs is not an array',
     );
   });
 
