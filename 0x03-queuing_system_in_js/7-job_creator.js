@@ -47,6 +47,11 @@ const jobs = [
   },
 ];
 
+const blackList = [
+  '4153518780',
+  '4153518781',
+];
+
 const push_notification_code_2 = kue.createQueue();
 
 jobs.forEach((element) => {
@@ -55,7 +60,7 @@ jobs.forEach((element) => {
       console.log(`Notification job created: ${job.id}`);
     }
     if (err) {
-      console.log(`Notification job JOB_ID failed: ${err}`);
+      console.log(`Notification job ${job.id} failed: ${err}`);
     }
   });
   job.on('complete', () => {
@@ -67,3 +72,20 @@ jobs.forEach((element) => {
   });
   console.log(`Notification job ${job.id} ${(jobs.indexOf(element) + 1) / jobs.length}% complete`);
 });
+
+function sendNotification(phoneNumber, message, job, done) {
+  console.log(`Notification job ${job.id} 0% complete`);
+  if (blackList.find(phoneNumber)) {
+    throw new Error(`Phone number ${phoneNumber} is blacklisted`);
+  }
+
+  console.log(`Notification job ${job.id} 50% complete`);
+  console.log(`Sending notification to ${phoneNumber}, with message: ${message}`);
+  const queue = kue.createQueue();
+  queue.process('push_notification_code_2', 2, (job, done) => {
+    const { phoneNumber, message } = job.data;
+    sendNotification(phoneNumber, message);
+    done();
+  });
+  done();
+}
