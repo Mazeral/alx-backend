@@ -22,3 +22,16 @@ job.on('complete', () => {
 job.on('failed', () => {
   console.log('Notification job failed');
 });
+
+const queue = kue.createQueue();
+
+function sendNotification(phoneNumber, message) {
+  console.log(`Sending notification to ${phoneNumber}, with message: ${message}`);
+}
+
+// process the jobs in the push_notification_code queue
+queue.process('push_notification_code', (task, done) => {
+  const { phoneNumber, message } = task.data;
+  sendNotification(phoneNumber, message);
+  done();
+});
