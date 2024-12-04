@@ -47,45 +47,28 @@ const jobs = [
   },
 ];
 
-const blackList = [
-  '4153518780',
-  '4153518781',
-];
-
-const push_notification_code_2 = kue.createQueue();
+const queue = kue.createQueue();
 
 jobs.forEach((element) => {
-  const job = push_notification_code_2.create('job', element).save((err) => {
+  const job = queue.create('push_notification_code_2', element);
+
+  job.on('complete', () => {
+    console.log(`Notification job ${job.id} completed`);
+  });
+
+  job.on('failed', (err) => {
+    console.log(`Notification job ${job.id} failed: ${err}`);
+  });
+
+  job.on('progress', (progress) => {
+    console.log(`Notification job ${job.id} ${progress}% complete`);
+  });
+
+  job.save((err) => {
     if (!err) {
       console.log(`Notification job created: ${job.id}`);
-    }
-    if (err) {
+    } else {
       console.log(`Notification job ${job.id} failed: ${err}`);
     }
   });
-  job.on('complete', () => {
-    console.log('Notification job completed');
-  });
-
-  job.on('failed', () => {
-    console.log('Notification job failed');
-  });
-  console.log(`Notification job ${job.id} ${(jobs.indexOf(element) + 1) / jobs.length}% complete`);
 });
-
-function sendNotification(phoneNumber, message, job, done) {
-  console.log(`Notification job ${job.id} 0% complete`);
-  if (blackList.find(phoneNumber)) {
-    throw new Error(`Phone number ${phoneNumber} is blacklisted`);
-  }
-
-  console.log(`Notification job ${job.id} 50% complete`);
-  console.log(`Sending notification to ${phoneNumber}, with message: ${message}`);
-  const queue = kue.createQueue();
-  queue.process('push_notification_code_2', 2, (job, done) => {
-    const { phoneNumber, message } = job.data;
-    sendNotification(phoneNumber, message);
-    done();
-  });
-  done();
-}
