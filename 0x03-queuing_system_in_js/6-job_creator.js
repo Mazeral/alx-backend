@@ -30,8 +30,8 @@ function sendNotification(phoneNumber, message) {
 }
 
 // process the jobs in the push_notification_code queue
-queue.process('push_notification_code', (task, done) => {
-  const { phoneNumber, message } = task.data;
+queue.process('push_notification_code', (job, done) => {
+  const { phoneNumber, message } = job.data;
   sendNotification(phoneNumber, message);
   done();
 });
